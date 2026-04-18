@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Million.eu — The World's Most Exclusive Digital Billboard</title>
+  <meta name="description" content="One space. One buyer. Forever. The world's most exclusive digital billboard — €1,000,000." />
+  <meta property="og:title" content="Million.eu — The Million Euro Page" />
+  <meta property="og:description" content="One space. One buyer. Forever. €1,000,000." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💎</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background: #0a0a0a; color: #f5f1e8; min-height: 100vh; overflow-x: hidden; }
+    body { font-family: 'Fraunces', 'Times New Roman', serif; -webkit-font-smoothing: antialiased; }
+    .serif { font-family: 'Fraunces', 'Times New Roman', serif; font-variation-settings: 'opsz' 144; letter-spacing: -0.01em; }
+    .serif-italic { font-family: 'Fraunces', serif; font-style: italic; font-variation-settings: 'opsz' 144; }
+    .mono { font-family: 'JetBrains Mono', monospace; letter-spacing: 0; }
+
+```
+@keyframes sweep { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+.fade-up { animation: fadeUp 0.7s cubic-bezier(0.2, 0.6, 0.2, 1) both; }
+.fade-in { animation: fadeIn 0.4s ease both; }
+.pulse { animation: pulse 2s ease-in-out infinite; }
+.spinner { width: 14px; height: 14px; border: 1.5px solid rgba(10,10,10,0.25); border-top-color: #0a0a0a; border-radius: 50%; animation: spin 0.8s linear infinite; display: inline-block; vertical-align: middle; }
+
+/* Layout */
+header {
+  padding: 24px clamp(24px, 5vw, 48px);
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+}
+.brand { display: flex; align-items: baseline; gap: 10px; }
+.brand-name { font-size: clamp(18px, 3vw, 22px); }
+.brand-suffix { font-size: 10px; color: #c8a45c; letter-spacing: 0.25em; }
+.header-right { display: flex; align-items: center; gap: 20px; font-size: 10px; letter-spacing: 0.2em; color: #6b6b6b; }
+.status-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #7cb342; margin-right: 6px; }
+.status-dot.sold { background: #c4302b; }
+
+main {
+  padding: 40px clamp(24px, 5vw, 48px) 64px;
+  display: flex; flex-direction: column; align-items: center;
+}
+
+.intro { text-align: center; max-width: 720px; margin-bottom: 56px; }
+.eyebrow { font-size: 11px; color: #c8a45c; letter-spacing: 0.35em; margin-bottom: 16px; }
+h1 { font-size: clamp(36px, 8vw, 72px); font-weight: 300; line-height: 0.95; }
+h1 .gold { color: #c8a45c; }
+h1 .muted { color: #6b6b6b; }
+
+.billboard-wrap { width: 100%; max-width: 960px; }
+.billboard-meta { display: flex; justify-content: space-between; font-size: 10px; color: #6b6b6b; letter-spacing: 0.2em; margin-bottom: 12px; padding: 0 4px; }
+
+.billboard {
+  position: relative; width: 100%; aspect-ratio: 16/9;
+  border: 1px solid #2a2a2a; background: #000;
+  cursor: pointer; transition: border-color 0.3s;
+}
+.billboard.sold { border-color: #c8a45c; }
+.billboard::before {
+  content: ''; position: absolute; inset: -1px; padding: 1px;
+  background: linear-gradient(90deg, transparent 0%, transparent 35%, #c8a45c 50%, transparent 65%, transparent 100%);
+  background-size: 200% 100%; animation: sweep 4s linear infinite;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  pointer-events: none;
+}
+.billboard.sold::before { display: none; }
+.billboard-inner { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 32px; }
+.billboard-title { font-size: clamp(24px, 4.5vw, 40px); font-weight: 300; margin-bottom: 12px; }
+.billboard-price { font-size: clamp(12px, 1.5vw, 14px); color: #c8a45c; letter-spacing: 0.2em; margin-bottom: 24px; }
+.billboard-hint { font-size: 10px; color: #6b6b6b; letter-spacing: 0.25em; }
+.billboard-logo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; padding: clamp(24px, 6vw, 48px); }
+.sold-badge {
+  position: absolute; top: 12px; left: 12px;
+  background: #c8a45c; color: #0a0a0a; font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; padding: 4px 8px; letter-spacing: 0.2em; font-weight: 600;
+}
+
+.sale-details {
+  display: flex; flex-direction: column; gap: 16px;
+  margin-top: 24px;
+}
+@media (min-width: 768px) {
+  .sale-details { flex-direction: row; justify-content: space-between; }
+  .sale-details > div:last-child { text-align: right; }
+}
+.detail-label { font-size: 10px; color: #6b6b6b; letter-spacing: 0.2em; margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+.detail-value { font-size: 20px; }
+
+.benefits {
+  margin-top: 96px; max-width: 960px; width: 100%;
+  display: grid; grid-template-columns: 1fr; gap: 32px; text-align: center;
+}
+@media (min-width: 768px) { .benefits { grid-template-columns: repeat(3, 1fr); } }
+.benefit-num { font-size: 11px; color: #c8a45c; letter-spacing: 0.3em; margin-bottom: 12px; font-family: 'JetBrains Mono', monospace; }
+.benefit-title { font-size: 20px; margin-bottom: 8px; }
+.benefit-text { font-size: 14px; color: #8a8a8a; line-height: 1.6; }
+
+footer {
+  padding: 24px clamp(24px, 5vw, 48px);
+  border-top: 1px solid #1a1a1a;
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px;
+  font-size: 10px; color: #4a4a4a; letter-spacing: 0.15em;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Modal */
+.modal-backdrop {
+  position: fixed; inset: 0; z-index: 50;
+  background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px;
+  animation: fadeIn 0.3s ease;
+}
+.modal {
+  background: #0f0f0f; border: 1px solid #2a2a2a;
+  padding: clamp(24px, 5vw, 36px);
+  max-width: 440px; width: 100%;
+  position: relative;
+}
+.modal-close {
+  position: absolute; top: 12px; right: 12px;
+  background: none; border: none; color: #f5f1e8; cursor: pointer;
+  font-size: 14px; opacity: 0.6; padding: 8px;
+}
+.modal-close:hover { opacity: 1; }
+.modal-eyebrow { font-size: 10px; color: #c8a45c; letter-spacing: 0.3em; margin-bottom: 12px; font-family: 'JetBrains Mono', monospace; }
+.modal h2 { font-size: clamp(28px, 5vw, 36px); font-weight: 300; margin-bottom: 8px; }
+.modal p { font-size: 14px; color: #8a8a8a; line-height: 1.6; margin-bottom: 28px; }
+
+.field-label { display: block; font-size: 10px; color: #8a8a8a; letter-spacing: 0.2em; margin-bottom: 6px; font-family: 'JetBrains Mono', monospace; }
+.field-input {
+  width: 100%; background: transparent; border: 1px solid #2a2a2a;
+  color: #f5f1e8; padding: 12px; font-size: 14px;
+  font-family: 'Fraunces', serif; transition: border-color 0.2s;
+}
+.field-input::placeholder { color: #555; }
+.field-input:focus { outline: none; border-color: #c8a45c; }
+
+.error-msg { margin-top: 12px; font-size: 13px; color: #c4302b; }
+
+.btn {
+  width: 100%; padding: 14px; margin-top: 20px;
+  border: none; cursor: pointer;
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  letter-spacing: 0.2em; font-weight: 600;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  transition: opacity 0.2s;
+}
+.btn-primary { background: #c8a45c; color: #0a0a0a; }
+.btn-primary:disabled { opacity: 0.6; cursor: wait; }
+.btn-secondary { background: transparent; border: 1px solid #2a2a2a; color: #f5f1e8; margin-top: 16px; padding: 12px; }
+
+.tiny-note { margin-top: 16px; text-align: center; font-size: 9px; color: #4a4a4a; letter-spacing: 0.2em; font-family: 'JetBrains Mono', monospace; }
+
+.success-screen { text-align: center; padding: 16px 0; }
+.success-screen h2 { margin-bottom: 16px; }
+.success-email { color: #c8a45c; display: inline-block; margin: 4px 0; }
+
+.hidden { display: none !important; }
+```
+
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <span class="serif brand-name">MILLION</span>
+    <span class="mono brand-suffix">·EU</span>
+  </div>
+  <div class="header-right">
+    <span class="mono"><span id="visitor-count">···</span> VISITS</span>
+    <span class="mono"><span class="status-dot pulse" id="status-dot"></span><span id="status-text">LIVE</span></span>
+  </div>
+</header>
+
+<main>
+  <div class="intro fade-up">
+    <div class="eyebrow mono">THE WORLD'S MOST EXCLUSIVE DIGITAL BILLBOARD</div>
+    <h1 class="serif">
+      One space. <span class="serif-italic gold">One</span> buyer.<br />
+      <span class="muted">Forever.</span>
+    </h1>
+  </div>
+
+  <div class="billboard-wrap fade-up" style="animation-delay: 0.15s">
+    <div class="billboard-meta">
+      <span class="mono">LOT 001 / 001</span>
+      <span class="mono" id="lot-reserve">RESERVE €1,000,000</span>
+    </div>
+
+```
+<div class="billboard" id="billboard">
+  <!-- Available state -->
+  <div class="billboard-inner" id="available-state">
+    <div class="serif billboard-title">Claim this space</div>
+    <div class="mono billboard-price">€1,000,000</div>
+    <div class="mono billboard-hint">[ CLICK TO INQUIRE ]</div>
+  </div>
+
+  <!-- Sold state (hidden by default) -->
+  <img class="billboard-logo hidden" id="sold-logo" alt="" />
+  <div class="sold-badge hidden" id="sold-badge">SOLD</div>
+</div>
+
+<div class="sale-details hidden" id="sale-details">
+  <div>
+    <div class="detail-label mono">ACQUIRED BY</div>
+    <div class="detail-value serif" id="buyer-name"></div>
+  </div>
+  <div>
+    <div class="detail-label mono">ON</div>
+    <div class="detail-value serif" id="sold-date"></div>
+  </div>
+</div>
+```
+
+  </div>
+
+  <div class="benefits fade-up" id="benefits" style="animation-delay: 0.3s">
+    <div>
+      <div class="benefit-num mono">01</div>
+      <div class="benefit-title serif">EXCLUSIVE</div>
+      <div class="benefit-text">One buyer. No rotation. No sharing.</div>
+    </div>
+    <div>
+      <div class="benefit-num mono">02</div>
+      <div class="benefit-title serif">PERMANENT</div>
+      <div class="benefit-text">Once acquired, the space is yours forever.</div>
+    </div>
+    <div>
+      <div class="benefit-num mono">03</div>
+      <div class="benefit-title serif">DIRECT</div>
+      <div class="benefit-text">No platforms, no middlemen. Private acquisition.</div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div>© 2026 MILLION.EU · ALL RIGHTS RESERVED</div>
+  <div>PRIVATE ACQUISITION ONLY</div>
+</footer>
+
+<!-- Inquiry modal -->
+
+<div class="modal-backdrop hidden" id="modal">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+
+```
+<div id="form-view">
+  <div class="modal-eyebrow">PRIVATE ACQUISITION</div>
+  <h2 class="serif">Leave your email</h2>
+  <p>Enter your email address and we will reach out privately to discuss the acquisition of Lot 001.</p>
+
+  <label class="field-label" for="email-input">EMAIL</label>
+  <input type="email" id="email-input" class="field-input" placeholder="you@example.com" autocomplete="email" />
+
+  <div class="error-msg hidden" id="error-msg"></div>
+
+  <button class="btn btn-primary" id="submit-btn" onclick="submitInquiry()">
+    <span id="submit-label">SUBMIT →</span>
+  </button>
+
+  <div class="tiny-note">WE WILL RESPOND WITHIN 24 HOURS</div>
+</div>
+
+<div id="success-view" class="hidden success-screen">
+  <div class="modal-eyebrow">✓ RECEIVED</div>
+  <h2 class="serif">Thank you</h2>
+  <p>
+    Your inquiry has been recorded. We will be in touch at<br />
+    <span class="success-email" id="success-email"></span><br />
+    within 24 hours.
+  </p>
+  <button class="btn btn-secondary" onclick="closeModal()">CLOSE</button>
+</div>
+```
+
+  </div>
+</div>
+
+<script>
+  // ═══════════════════════════════════════════════════════════════
+  // CONFIGURATION
+  // ═══════════════════════════════════════════════════════════════
+
+  const WEB3FORMS_KEY = 'd1360050-91c4-409a-a3b2-f08121908a87';
+
+  // When you make a sale, fill in this object and redeploy.
+  // Set SOLD.active = true to lock the billboard.
+  const SOLD = {
+    active: false,
+    buyer: '',           // e.g. 'Acme Corporation'
+    url: '',             // e.g. 'https://acme.com'
+    imageUrl: '',        // e.g. 'https://yoursite.com/logo.png' or a data URL
+    date: '',            // e.g. '2026-05-15'
+  };
+
+  // ═══════════════════════════════════════════════════════════════
+  // INITIALIZATION
+  // ═══════════════════════════════════════════════════════════════
+
+  const $ = (id) => document.getElementById(id);
+
+  function init() {
+    // Visitor counter — uses localStorage + basic session tracking
+    updateVisitorCount();
+
+    // Apply sold state if configured
+    if (SOLD.active && SOLD.buyer && SOLD.url) {
+      applySoldState();
+    }
+
+    // Enter key on email input
+    $('email-input').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') submitInquiry();
+    });
+
+    // Billboard click
+    $('billboard').addEventListener('click', () => {
+      if (SOLD.active) {
+        window.open(SOLD.url, '_blank', 'noopener,noreferrer');
+      } else {
+        openModal();
+      }
+    });
+
+    // Close modal on backdrop click
+    $('modal').addEventListener('click', closeModal);
+  }
+
+  function applySoldState() {
+    $('billboard').classList.add('sold');
+    $('available-state').classList.add('hidden');
+    $('benefits').classList.add('hidden');
+    const logo = $('sold-logo');
+    logo.src = SOLD.imageUrl;
+    logo.alt = SOLD.buyer;
+    logo.classList.remove('hidden');
+    $('sold-badge').classList.remove('hidden');
+    $('lot-reserve').textContent = 'SOLD';
+    $('status-dot').classList.add('sold');
+    $('status-text').textContent = 'SOLD';
+
+    const details = $('sale-details');
+    details.classList.remove('hidden');
+    $('buyer-name').textContent = SOLD.buyer;
+    try {
+      $('sold-date').textContent = new Date(SOLD.date).toLocaleDateString('en-GB', {
+        day: '2-digit', month: 'long', year: 'numeric'
+      });
+    } catch {
+      $('sold-date').textContent = SOLD.date;
+    }
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // VISITOR COUNTER (simple, browser-local + session tracking)
+  // ═══════════════════════════════════════════════════════════════
+
+  function updateVisitorCount() {
+    try {
+      // Only count once per session (not per reload)
+      const sessionKey = 'million_eu_counted_session';
+      const countKey = 'million_eu_visit_count';
+      const alreadyCounted = sessionStorage.getItem(sessionKey);
+
+      let count = parseInt(localStorage.getItem(countKey) || '0', 10);
+      if (!alreadyCounted) {
+        count += 1;
+        localStorage.setItem(countKey, String(count));
+        sessionStorage.setItem(sessionKey, '1');
+      }
+      $('visitor-count').textContent = count.toLocaleString();
+    } catch {
+      $('visitor-count').textContent = '—';
+    }
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // MODAL
+  // ═══════════════════════════════════════════════════════════════
+
+  function openModal() {
+    $('modal').classList.remove('hidden');
+    $('form-view').classList.remove('hidden');
+    $('success-view').classList.add('hidden');
+    $('error-msg').classList.add('hidden');
+    $('email-input').value = '';
+    setTimeout(() => $('email-input').focus(), 100);
+  }
+
+  function closeModal() {
+    $('modal').classList.add('hidden');
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // FORM SUBMISSION → Web3Forms → email to owner
+  // ═══════════════════════════════════════════════════════════════
+
+  function validEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+  }
+
+  async function submitInquiry() {
+    const errEl = $('error-msg');
+    const btn = $('submit-btn');
+    const label = $('submit-label');
+    const input = $('email-input');
+    const email = input.value.trim();
+
+    errEl.classList.add('hidden');
+
+    if (!validEmail(email)) {
+      errEl.textContent = 'Please enter a valid email address.';
+      errEl.classList.remove('hidden');
+      return;
+    }
+
+    btn.disabled = true;
+    label.innerHTML = '<span class="spinner"></span> SUBMITTING...';
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: '💎 New Million.eu Inquiry',
+          from_name: 'Million.eu',
+          email: email,
+          message:
+            'New inquiry for Lot 001 on Million.eu\n\n' +
+            'Interested party email: ' + email + '\n' +
+            'Submitted at: ' + new Date().toLocaleString('en-GB') + '\n' +
+            'User agent: ' + navigator.userAgent + '\n\n' +
+            'Reply directly to this email to contact them.',
+        }),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (data.success) {
+        // Success — show thank-you screen
+        $('success-email').textContent = email;
+        $('form-view').classList.add('hidden');
+        $('success-view').classList.remove('hidden');
+      } else {
+        throw new Error(data.message || 'Submission failed. Please try again.');
+      }
+    } catch (err) {
+      errEl.textContent = err.message || 'Could not submit. Please try again or contact us directly.';
+      errEl.classList.remove('hidden');
+    } finally {
+      btn.disabled = false;
+      label.textContent = 'SUBMIT →';
+    }
+  }
+
+  // Kick off
+  init();
+</script>
+
+</body>
+</html>
